@@ -20,7 +20,7 @@ It is a digital marketplace hosted locally where the users can create listings t
 ## Overview
 The project uses the microservie architecture with 6 bounded contexts.<br>
 For a detailed overview, please go to the architecture folder in this repository. The following diagram gives a high level overview of the architecture. <br>
-![image info](./architecture/high_level_architecture.png)
+![image info](/architecture/high_level_architecture.png)
 
 
 ## How to Execute:
