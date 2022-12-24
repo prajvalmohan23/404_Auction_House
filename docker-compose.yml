@@ -1,0 +1,127 @@
+version: "3.7"
+
+services:
+  payment_db:
+    image: postgres:13-alpine
+    container_name: payment_db 
+    restart: always
+    ports: 
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ebay
+    volumes: 
+      - /Users/user/data/psql/payment
+    expose:
+      - 5432
+
+  payment:
+    build: ./payment/.  
+    container_name: payment_service
+    depends_on:
+      - payment_db
+    environment: 
+      - DATABASE_URL=postgresql://postgres:postgres@payment_db:5432/ebay
+    ports:
+      - "5000:5000"
+    networks:
+      default:
+        aliases:
+          - service.payment
+
+  notification:
+    build: ./notification/.
+    container_name: notification_service
+    environment:
+      - MONGODB_CONNSTRING=mongodb://notification_db
+      - MAILGUN_API_KEY=${MAILGUN_API_KEY}
+      - MAILGUN_DOMAIN=${MAILGUN_DOMAIN}
+    ports:
+      - "5001:5000"
+    networks:
+      default:
+        aliases:
+          - service.notification
+
+  notification_db:
+     image: mongo:latest
+     ports:
+       - "27017:27017"
+     container_name: notification_db
+     volumes:
+       - /Users/user/data/mongo/notification
+     networks:
+       default:
+         aliases:
+           - service.notification
+  
+  itemservice:
+    build: ./item/.
+    container_name: item_service
+    environment:
+      - MONGODB_CONNSTRING=mongodb://item_db
+    ports:
+      - "5002:5000"
+    networks:
+      default:
+        aliases:
+          - service.item
+
+  item_mongodb:
+    image: mongo:latest
+    ports:
+      - "27019:27017"
+    container_name: item_db 
+    volumes: 
+      - /Users/user/data/mongo/item
+
+  user:
+    build: ./user/.
+    container_name: user_service
+    environment:
+      - MONGODB_CONNSTRING=mongodb://user_db
+    ports:
+      - "5003:5000"
+    networks:
+      default:
+        aliases:
+          - service.user
+
+  user_mongodb:
+    image: mongo:latest
+    ports:
+      - "27020:27017"
+    container_name: user_db
+    volumes:
+      - /Users/user/data/mongo/user
+
+  auction:
+    build: ./auction/.
+    container_name: auction_service
+    environment: 
+      - MONGODB_CONNSTRING=mongodb://auction_db
+    ports:
+      - "5004:5000"
+    networks:
+      default:
+        aliases:
+          - service.auction
+
+  auction_db:
+    image: mongo:latest
+    container_name: auction_db
+    ports:
+      - "27021:27017"
+    volumes:
+      - /Users/user/data/mongo/auction
+
+  front:
+    build: ./front/.
+    container_name: frontend_service
+    ports:
+      - "5005:5000"
+    networks:
+      default:
+        aliases:
+          - service.frontend

@@ -1,0 +1,129 @@
+<html>
+    <h2>404 Online Auction House!</h2>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+        /* form {border: 3px solid #f1f1f1;} */
+
+        button[name="details"] {
+          background-color: #4f04aa;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px 0;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+          float: right;
+        }
+        
+        button[name="details"]:hover {
+          opacity: 0.8;
+        }
+
+        button[name="listing"] {
+          background-color: #04AA6D;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px 0;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+        }
+        
+        button[name="listing"]:hover {
+          opacity: 0.8;
+        }
+
+        button[name="bid"] {
+          background-color: #ebe40b;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px 0;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+          float: right;
+        }
+        
+        button[name="bid"]:hover {
+          opacity: 0.8;
+        }
+        
+        button[name="del"] {
+          background-color: #f44336;
+          color: white;
+          padding: 14px 20px;
+          margin: 8px 0;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+        }
+        
+        button[name="del"]:hover {
+          opacity: 0.8;
+        }
+
+        .container{
+          padding: 16px;
+        }
+
+        .column {
+        float: left;
+        padding: 10px;
+        }
+
+        .left, .right {
+        width: 32%;
+        }
+
+        hr {
+        height: 2px;
+        background: black;
+        }
+
+        .middle {
+        width: 32%;
+        }
+
+        .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+        
+        </style>
+        </head>
+        <body>
+        
+        <h3>Auctions</h3>
+
+        <div class="row">
+            <div class="column left">
+                <div class="container">
+                        <a href="{{ url_for('create_listing') }}"><button name="listing" type="button">Create Listing</button></a>
+                        <a href="{{ url_for('delete_listing') }}"><button name="listing" type="button">Delete Listing</button></a>
+                        <a href="{{ url_for('update_listing') }}"><button name="listing" type="button">Update Listing</button></a>
+                </div> 
+            </div>
+
+            <div class="column middle">
+                <div class="container">
+                        <a href="{{ url_for('view_bids') }}"><button name="bid" type="button">View Bids</button></a>
+                        <a href="{{ url_for('bid') }}"><button name="bid" type="button">Place a Bid</button></a>
+                </div>
+            </div>
+
+            <div class="column right">
+                <div class="container">
+                        <a href="{{ url_for('view_live') }}"><button name="details" type="button">View Live Auctions</button></a>
+                        <a href="{{ url_for('get_listing') }}"><button name="details" type="button">See Auction Details</button></a>
+                        <a href="{{ url_for('view_metrics') }}"><button name="details" type="button">View Auction Results</button></a>
+                        <hr>
+                        <a href="{{ url_for('stop_auction') }}"><button name="del" type="button">End an Auction</button></a>
+                </div>
+            </div>
+        </div>
+
+        </body>
+</html>
